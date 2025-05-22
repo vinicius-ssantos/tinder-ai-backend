@@ -28,6 +28,12 @@ public class TinderAiBackendApplication implements CommandLineRunner {
     }
 
     public void run(String... args) throws Exception {
+
+        profileRepository.deleteAll();
+        conversationRepository.deleteAll();
+
+
+
         Profile profile = new Profile(
                 "1",
                 "John",
@@ -39,8 +45,19 @@ public class TinderAiBackendApplication implements CommandLineRunner {
                 "image.jpg",
                 "INTP"
         );
-        profileRepository.save(profile);
-        profileRepository.findAll().forEach(System.out::println);
+
+        Profile profile2 = new Profile(
+                "2",
+                "Jane",
+                "Doe",
+                30,
+                "Asian",
+                Gender.FEMALE,
+                "Hello, I'm Jane!",
+                "image.jpg",
+                "INTP"
+        ) ;
+
 
         Conversation conversation = new Conversation(
                 "1",
@@ -48,7 +65,10 @@ public class TinderAiBackendApplication implements CommandLineRunner {
                 List.of(new ChatMessage("Hello!", profile.id(), LocalDateTime.now()))
         );
 
+        profileRepository.save(profile);
+        profileRepository.save(profile2);
         conversationRepository.save(conversation);
+        profileRepository.findAll().forEach(System.out::println);
         conversationRepository.findAll().forEach(System.out::println);
 
     }
